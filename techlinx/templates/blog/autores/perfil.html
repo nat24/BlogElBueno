@@ -1,0 +1,120 @@
+{% extends "blog/autores/base.html" %}
+{% load static %}
+{% block title %}Autor{% endblock title %}
+
+{% block content %}
+<main class="container left-container">
+    <div class="row">
+
+        <div id="menu-target">
+            <ul>
+                <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                <li><i class="fa fa-user"></i><a href="author.html">John Smith</a></li>
+                <li><i class="fa fa-anchor"></i><a href="page.html">About</a></li>
+                <li><i class="fa fa-star"></i><a href="favorites.html">Favorites</a></li>
+                <li><i class="fa fa-paper-plane"></i><a href="contact.html">Contact</a></li>
+            </ul>
+            <hr>
+            <ul>
+                <li><i class="fa fa-file"></i><a href="post.html">Post Page</a></li>
+                <li><i class="fa fa-file"></i><a href="post-sidebar.html">Post with Sidebar</a></li>
+                <li><i class="fa fa-home"></i><a href="alt-home.html">Alternate Home</a></li>
+                <li><i class="fa fa-image"></i><a href="category.html">Category Page</a></li>
+            </ul>
+        </div>
+
+
+        <section class="sidebar col-lg-5 col-12" style="background-image: url({{ image  }})">
+
+            <span class="menu-trigger animated fadeInDown">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </span>
+
+            <div class="site-info">
+                <div class="primary-info">
+                <h1>{{autor.user.first_name}} {{autor.user.last_name}}</h1>
+                <p>Just a friendly writer, busy typing away to feed hungry eyes. </p>
+                <div class="social-links">
+                    {% if autor.twitter %}
+                    <a class="social-icons" href="{{autor.twitter}}" ><i class="fa fa-twitter fa-5x"></i></a>
+                    {% endif %}
+                    
+                    {% if autor.facebook %}
+                    <a class="social-icons" href={{autor.facebook}} ><i class="fa fa-facebook-official fa-5x"></i></a>
+                    {% endif %}
+
+                    {% if autor.GitHub %}
+                    <a class="social-icons" href="{{autor.GitHub}}" ><i class="fa fa-github fa-5x"></i></a>
+                    {% endif %}
+                    {% if autor.pagina_personal %}
+                    <a class="social-icons" href="{{autor.pagina_personal}}" ><i class="fa fa-globe fa-5x"></i></a>
+                    {% endif %}
+                   
+                    <a class="social-icons" data-platform="mail"  href="mailto:{{autor.user.email}}"><i class="fa fa-envelope fa-5x"></i></a>
+
+                </div>
+                </div>
+                <div class="secondary-info">
+                </div>
+            </div>
+
+        </section>
+
+        <div class="col-lg-7 col-12 ml-auto main-content">
+
+            <div class="author-bio">
+
+                <img src="{{autor.imagen.url}}">
+
+                <div class="author-bio__info">
+                    <h1>{{autor.user.first_name}} {{autor.user.last_name}}</h1>
+                    {{autor.biografia | safe}}
+                </div>
+            </div>
+            <p>
+
+            <h2 class="favorites">Post mas recientes</h2>
+
+            <div class="posts-block animated fadeIn ">
+
+                {% for publicacion in publicaciones  %}
+                <article class="post author-page">
+                        <div class="post-preview col-10 col-sm-9  no-gutter">
+                            <h2><a href="{{publicacion.get_absolute_url}}">{{publicacion.titulo}}</a></h2>
+    
+                            <p>{{publicacion.contenido |truncatechars:120 | striptags}} </p>
+    
+                        </div>
+    
+                        <div class="col-sm-3 col-md-2 ml-auto hidden-sm hidden-xs no-gutter">
+                            <p class="meta author-page">
+                                <span class="time"><i class="fa fa-bookmark"></i> {{publicacion.tiempo_estimado}}</span>
+                                <span class="min">minuto(s) de lectura</span>
+                            </p>
+                        </div>
+                </article>
+                {% endfor %}
+
+                
+
+                <div class="view-all-by-author">
+                    <a href="index.html">View All Post by Michelle <i class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+            <footer class="split-footer">
+                <a href="page.html">About</a>
+                <i class="link-spacer"></i>
+                <a href="page.html">Writer 2017</a>
+            </footer>
+        </div><!-- main content -->
+    </div> <!--/row -->
+
+</main> <!-- /container -->
+
+
+
+
+{% endblock content %}

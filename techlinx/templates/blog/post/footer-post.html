@@ -1,0 +1,76 @@
+{% load bitly %}
+        <footer class="single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <img src="{{post.autor.imagen.url}}" class="user-icon " alt="user-image">
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="category-list">
+                            <p>Publicado <span>{{post.fecha_publicacion}}</span></p>
+                            <p><a href="#">{{post.autor.user.first_name}} {{post.autor.user.last_name}}</a> in <a href="#">{{post.categoria.nombre}}</a></p>
+
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col-xs-12 col-md-4">
+                        <div class="social">
+                            <p>Compartir con: </a>
+                            <div class="social-links">
+                                <a class="social-icon" href="#"><i class="fa fa-twitter"></i></a>
+
+                                <a class="social-icon" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" data-platform="facebook" data-message="Message about this post" data-url="http://bit.ly/2JplFhg={{ request.build_absolute_uri }}"><i class="fa fa-facebook-official"></i></a>
+
+                                <a class="social-icon" data-platform="mail"  href="mailto:support@writertheme.com"><i class="fa fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end row -->
+            </div>
+            {% comment "v2" %}
+            <div class="row read-another-section">
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                  <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-iceland.jpg">
+                    <h3 class="read-another">Land of Fire &amp; Ice</h3>
+                  </a>
+                </div>
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-spain.jpg">
+                    <h3 class="read-another">The Coast of Your Mind</h3>
+                </a>
+                </div>
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                  <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-peak.jpg">
+                    <h3 class="read-another">Get Out of Your Comfort Zone</h3>
+                  </a>
+                </div>
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                    <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-woods.jpg">
+                    <h3 class="read-another">Not All Who Wander Are Lost</h3>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                    <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-sunset.jpg">
+                    <h3 class="read-another">Open Your Mind</h3>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 no-gutter read-another-container">
+                    <a href="post.html">
+                    <div class="overlay"></div>
+                    <img src="img/square-mountain.jpg">
+                    <h3 class="read-another">Ten Reasons to Hike</h3>
+                    </a>
+                </div>
+            </div>
+            {% endcomment %}
+
+        </footer>

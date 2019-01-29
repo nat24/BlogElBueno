@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+
+    <div id="menu-target">
+        <ul>
+            <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+            <li><i class="fa fa-user"></i><a href="author.html">John Smith</a></li>
+            <li><i class="fa fa-anchor"></i><a href="page.html">About</a></li>
+            <li><i class="fa fa-star"></i><a href="favorites.html">Favorites</a></li>
+            <li><i class="fa fa-paper-plane"></i><a href="contact.html">Contact</a></li>
+        </ul>
+        <hr>
+        <ul>
+            <li><i class="fa fa-file"></i><a href="post.html">Post Page</a></li>
+            <li><i class="fa fa-file"></i><a href="post-sidebar.html">Post with Sidebar</a></li>
+
+            <li><i class="fa fa-home"></i><a href="alt-home.html">Alternate Home</a></li>
+            <li><i class="fa fa-image"></i><a href="category.html">Category Page</a></li>
+        </ul>
+    </div>
+
+    <section class="sidebar col-lg-5 col-12" style="background-image: url({{ image  }})">
+
+        <span class="menu-trigger animated fadeInDown">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </span>
+
+        <div class="site-info">
+            <div class="primary-info">
+                <h1>Writer</h1>
+                <p>A minimal blogging theme to put your content on show. <a href="post.html">Look at the features.</a> </p>
+
+                <p>Content is king</p>
+            </div>
+            <div class="secondary-info">
+                <p>
+                    <a class="btn btn-primary" href="#"><i class="fa fa-user-plus"></i>Join Our Newsletter</a>
+                </p>
+            </div>
+        </div>
+    </section><!-- end sidebar -->
+
+    <section class="col-lg-7 col-12 ml-auto main-content">
+
+        <div class="sub-nav">
+            <a href="#" class="select-posts active">Posts</a>
+            <a href="#" class="select-categories">Categories</a>
+        </div>
+
+        <div class="home-page-posts animated fadeIn ">
+
+            {% for post  in posts  %}
+            <article class="post">
+                    <div class="post-preview col-10  no-gutter">
+                        <h2><a href="{% url 'blog:post' post.slug  %}">{{post.titulo}}</a></h2>
+
+                        <p>{{post.contenido |truncatechars:120 | striptags}} </p>
+
+                        <p class="meta">
+                            <a href="{{post.autor.get_absolute_url}}">{{post.autor.user.first_name}} {{post.autor.user.last_name}} </a> en
+                            <a href="{{post.autor.get_absolute_url}}">{{post.categoria.nombre}}</a> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{post.tiempo_estimado}} minuto(s) de lectura
+                        </p>
+                    </div>
+
+                    <div class=" col-2  no-gutter">
+                        <img src="{{post.autor.imagen.url}}" class="user-icon" alt="user-image">
+                    </div>
+                </article>
+            {% empty %}
+                <h3>No hay Post :(</h3>
+            {% endfor %}
+
+
+            <nav aria-label="Page navigation posts">
+
+                    {% if posts.has_other_pages %}
+                          <ul class="pagination">
+                              {% if posts.has_previous %}
+                              <li class="page-item" ><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                              {% else %}
+                              <li class="page-item disabled"><a class="page-link" >&laquo;</a></li>
+                              {% endif %}
+                              {% for i in posts.paginator.page_range %}
+                              {% if posts.number == i %}
+                                  <li class="page-item active"><a class="page-link">{{ i }} <span class="sr-only">(current)</span></a></li>
+                              {% else %}
+                                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                              {% endif %}
+                              {% endfor %}
+                              {% if posts.has_next %}
+                              <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">&raquo;</a></li>
+                              {% else %}
+                              <li class="page-item disabled"><a class="page-link" >&raquo;</a></li>
+                              {% endif %}
+                          </ul>
+                      {% endif %}
+                  </nav>
+
+
+
+
+
+        </div><!-- Home page posts -->
+
+        <div class="home-page-categories hide animated fadeIn ">
+            <div class="category row">
+                    {% for category in categories  %}
+                    <div class="category-preview col-6 col-sm-4  ">
+                            <h2>{{category.nombre}}</h2>
+                            <a href="categorias/{{category.nombre}}"><img src="{{category.imagen.url}}" alt="category-image" width="170px" height="169px"></a>
+                    </div>
+                    {% empty %}
+                    <h3>No hay categorias</h3>
+                    {% endfor %}
+
+            </div>
+        </div>
+
+
+
+
+
+        <footer class="split-footer">
+            <a href="post.html">About</a>
+            <i class="link-spacer"></i>
+            <a href="post.html">Writer 2017</a>
+        </footer>
+
+    </section><!-- main content -->
+
+</div> <!--/row -->
+
+
+
+{% endblock content %}

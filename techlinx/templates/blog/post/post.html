@@ -1,0 +1,135 @@
+{% extends "blog/post/base-post.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "blog/post/header-post.html" with url=post.cover.url %}
+
+<main class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 single-content-sidebar">
+                    <h1>{{post.titulo | upper}}</h1>
+                <p class="meta">
+
+                </p>
+
+                {{post.contenido |safe}}
+            <!--<div class="comentarios">
+                    <textarea name="comentarios" rows="10" cols="40">Escribe tus comentarios</textarea>
+            </div>-->
+            <!--22/11/2018 Caja de Comentarios de Facebook-->
+<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!--Aqui van los Comentarios 11/11/2018 -->
+
+<style media="screen">
+  a{
+    font-size: 40px;
+  }
+</style>
+<hr>
+
+
+<!--<h1>Añadir nuevo Comentario</h1>
+<form id="new_comment_user">
+  <p>
+    <label for="id user">User:</label>
+    <input id="id_user" type="text" name="user" required="" maxlength="200">
+  </p>
+  <p>
+    <label for="id email">Email:</label>
+    <input id="id_email" type="email" name="email" required="" maxlength="254">
+  </p>
+  <p>
+    <textarea id="id_text" name="text" required="" rows="10" cols="40"></textarea>
+  </p>
+  <style media="screen">
+    .btn{
+      height: 40px;
+      width: 200px;
+      border-radius: 25px;
+      background-color: #CC9933;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+      color: white;
+    }
+  </style>
+  <button type="submit" name="button" class="btn">Submit</button>
+</form>-->
+
+<br><br>
+<hr>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" class="btn btn-outline-success">
+
+</form>
+
+
+{% for comment in post.comments.all %}
+    <div class="comment">
+     <p>Comentarios: {{ post.comments.count }}</p> <!--12/11/2018-->
+        <div class="date"> Fecha de Creacion: {{ comment.created }}</div>
+
+        <p>Written by {{post.author}} on {{post.published}}</p>
+        <p>{{comment.user}}</p>
+        <p>{{ comment.text|linebreaks }}</p>
+
+    </div>
+{% empty %}
+    <p>No Hay Comentarios :(</p>
+
+{% endfor %}
+
+
+            </div><!-- main-content/col -->
+
+            <div class="col-12 col-lg-3 ml-auto single-content-sidebar-area">
+
+                <img src="{{post.autor.imagen.url}}" class="user-icon " alt="user-image">
+                <div class="meta">
+
+                    <div class="sidebar-info">
+                        <a class="" href="category.html">{{post.autor.user.first_name}} {{post.autor.user.last_name}}</a> in <a href="category.html">{{post.categoria.nombre}}</a>
+                    </div>
+
+                    <div class="sidebar-readtime">
+                        <i class="fa fa-bookmark"></i> {{post.tiempo_estimado}} minuto(s) de lectura
+                    </div>
+
+                </div>
+
+
+                {% if related %}
+                <h2 class="favorites">Posts Similares</h2>
+
+                    {% for post in related  %}
+                    <div class="similar-post">
+                        <a href="{{post.get_absolute_url}}"><h3>{{post.titulo}}</h3></a>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+
+
+
+            </div>
+
+        </div> <!--/row -->
+
+    </main> <!-- /container -->
+
+
+{% include "blog/post/footer-post.html" with  post=post %}
+
+{% endblock content %}
